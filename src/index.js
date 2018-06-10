@@ -7,10 +7,9 @@ import configureStore from './state/store';
 import Routes from './routes';
 import AppLayout from './views/AppLayout';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const store = configureStore();
-
-
 
 ReactDOM.render(
   <Provider store={store}>
