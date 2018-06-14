@@ -5,7 +5,9 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter } from "react-router-dom";
-import configureStore from './server-store';
+import {Helmet} from "react-helmet";
+
+import configureStore from './src/state/store';
 
 import Routes from './src/routes';
 import AppLayout from './src/views/AppLayout';
@@ -41,21 +43,25 @@ function handleRender(req, res) {
       </StaticRouter>
     </Provider>
   );
+  const helmet = Helmet.renderStatic();
 
 // Grab the initial state from our Redux store
 const preloadedState = store.getState()
 // Send the rendered page back to the client
-res.send(renderFullPage(html, preloadedState))
+res.send(renderFullPage(html, preloadedState, helmet))
 }
 
 
-function renderFullPage(html, preloadedState) {
+function renderFullPage(html, preloadedState, helmet) {
   return `
     <!doctype html>
     <html>
       <head>
-        <title>Redux Universal Example</title>
+        ${helmet.meta.toString()}
+        ${helmet.link.toString()}
+        ${helmet.title.toString()}
 
+        // need to make this dynamically................
         <link rel="stylesheet" href="/static/css/main.e0b3d3de.css">
         <script src="/static/js/main.99d1b178.js" defer></script>
       </head>

@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import {Helmet} from "react-helmet";
+
 
 import { map } from 'lodash';
 import { Table } from 'reactstrap';
@@ -25,6 +27,11 @@ class TODO extends Component {
     const { todos } = this.props;
     return (
       <div>
+        <Helmet>
+          <meta charSet="utf-8" />
+          <title>TODO PAGE BY Helmet </title>
+          <link rel="canonical" href="http://mysite.com/todo" />
+        </Helmet>
         <div> TODO page.... </div>
         <Table>
           <thead>
