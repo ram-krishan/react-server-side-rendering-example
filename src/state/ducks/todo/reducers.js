@@ -2,13 +2,7 @@ import * as types from './types';
 
 
 const initialState = {
-  todos: [
-    {id: 1, task: 'work1', complete: false},
-    {id: 2, task: 'work2', complete: false},
-    {id: 3, task: 'work3', complete: false},
-    {id: 4, task: 'work4', complete: true},
-    {id: 5, task: 'work5', complete: false}
-  ]
+  todos: []
 };
 
 const todoReducer = (state = initialState, action) => {
@@ -17,7 +11,8 @@ const todoReducer = (state = initialState, action) => {
 
     case types.ADD_TODO:
     break;
-
+    case types.SET_TODOS:
+      return Object.assign({}, state, { todos: action.todos });
     case types.REMOVE_TODO:
     break;
 

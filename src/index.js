@@ -1,21 +1,26 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { hydrate } from 'react-dom'
 import { Provider } from 'react-redux'
 
 import registerServiceWorker from './registerServiceWorker';
 import configureStore from './state/store';
 import Routes from './routes';
 import AppLayout from './views/AppLayout';
+import {BrowserRouter as Router} from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const store = configureStore();
 
-ReactDOM.render(
+console.log('its.... working....');
+
+hydrate(
   <Provider store={store}>
-    <AppLayout>
-      <Routes />
-    </AppLayout>
+    <Router>
+      <AppLayout>
+          <Routes />
+      </AppLayout>
+    </Router>
   </Provider>, document.getElementById('root')
 );
 
