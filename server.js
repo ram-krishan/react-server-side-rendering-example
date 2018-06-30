@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter } from "react-router-dom";
 import {Helmet} from "react-helmet";
+import fs from 'fs';
 
 import configureStore from './src/state/store';
 
@@ -22,11 +23,11 @@ app.use('/', Express.static('build'))
 // This is fired every time the server side receives a request
 app.use(handleRender)
 
-// We are going to fill these out in the sections to follow
-function handleRender(req, res) { /* ... */ }
-function renderFullPage(html, preloadedState) { /* ... */ }
 
-app.listen(port)
+app.listen(port, () => {
+  console.log("server started on port 5000 \n Press Ctrl + C to stop.");
+  console.log('visit http://localhost:5000')
+});
 
 function handleRender(req, res) {
   console.log('....................req.............', req.url);
@@ -53,6 +54,8 @@ res.send(renderFullPage(html, preloadedState, helmet))
 
 
 function renderFullPage(html, preloadedState, helmet) {
+  const assetsJson = JSON.parse(fs.readFileSync('./build/asset-manifest.json'));
+
   return `
     <!doctype html>
     <html>
@@ -61,9 +64,8 @@ function renderFullPage(html, preloadedState, helmet) {
         ${helmet.link.toString()}
         ${helmet.title.toString()}
 
-        // need to make this dynamically................
-        <link rel="stylesheet" href="/static/css/main.e0b3d3de.css">
-        <script src="/static/js/main.99d1b178.js" defer></script>
+        <link rel="stylesheet" href="/${assetsJson['main.css']}">
+        <script src="/${assetsJson['main.js']}" defer></script>
       </head>
       <body>
         <div id="root">${html}</div>
